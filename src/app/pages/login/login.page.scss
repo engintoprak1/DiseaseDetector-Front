@@ -1,0 +1,53 @@
+*{
+    --border-style: none !important;
+}
+
+ion-content{
+    --offset-top:-15% !important;
+    text-align: center;
+    margin-top:25% !important;
+}
+.input-col{
+    text-align: left !important;
+    label{
+        margin-left: 10%;
+    color: #024863 !important;;
+    }
+}
+.title{
+    color:#1A9581;
+    h2{
+        font-size:40px;
+        font-weight: bolder;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+}
+
+
+ion-input{
+    font-family: 'Gilroy-Regular', sans-serif !important;
+    --background: #F3F3F3 !important;
+    width:80%;
+    margin: auto;
+    padding-left:17px !important;
+    margin-top:2%;
+    color: #024863 !important;;
+}
+.login-btn{
+    --background: #1A9581 !important;
+    color:white;
+    font-family: 'Gilroy-Bold', sans-serif !important;
+    font-size: 18px !important;
+    width: 80%;
+    --border-radius: 0 !important;
+}
+.register-btn{
+    --background: white !important;
+    border:3px solid #1A9581 !important;
+    color:#1A9581;
+    font-family: 'Gilroy-Bold', sans-serif !important;
+    font-size: 18px !important;
+    width: 80%;
+    --border-radius: 0 !important;
+}

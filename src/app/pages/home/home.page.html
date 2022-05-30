@@ -1,0 +1,32 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <div class="title">
+          <h2>Disease Detection</h2>
+        </div>
+      </ion-col>
+      <ion-col class="input-col" size="12">
+       <div class="information-area">
+         <p>Bu ekranda hastalığınızın tespiti için sorulan sorulara sesli bir şekilde yanıt vermeniz istenmektedir. Mikrofon butonuna tıklayarak sesli yanıtı devreye alabilirsiniz. Dilerseniz butonlara basarak da sorulara cevap verebilirsiniz.</p>
+       </div>
+      </ion-col>
+      <ion-col  size="12" class="text-left question">
+        <label>{{questions[currentIndex].questionString}}</label>
+        <div class="answers">
+          <div class="answer" (click)="selectAnswer(answer)" *ngFor="let answer of questions[currentIndex].answers; let i=index;">
+            <div [class.active]="answer.isSelected" class="selection">{{answerOptions[i]}}</div>
+            <span class="question-string">{{answer.answer}}</span>
+          </div>
+        </div>
+      </ion-col>
+      <ion-col class="button-col" size="12">
+        <ion-button class="login-btn font-weight-regular" (click)="goNextQuestion()">{{getNextQuestionsButtonString()}}</ion-button>
+        <ion-button class="register-btn font-weight-regular" *ngIf="currentIndex > 0" (click)="goPreviousQuestion()">BİR ÖNCEKİ SORU</ion-button>
+      </ion-col>
+      <ion-col class="microphone-col" size="12">
+        <ion-icon name="mic-outline"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

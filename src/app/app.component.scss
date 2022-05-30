@@ -1,0 +1,62 @@
+:root {
+	--ion-color-dd-color: #1A9581;
+	--ion-color-dd-color-rgb: 26,149,129;
+	--ion-color-dd-color-contrast: #ffffff;
+	--ion-color-dd-color-contrast-rgb: 255,255,255;
+	--ion-color-dd-color-shade: #178372;
+	--ion-color-dd-color-tint: #31a08e;
+}
+
+.ion-color-dd-color {
+	--ion-color-base: var(--ion-color-dd-color);
+	--ion-color-base-rgb: var(--ion-color-dd-color-rgb);
+	--ion-color-contrast: var(--ion-color-dd-color-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-dd-color-contrast-rgb);
+	--ion-color-shade: var(--ion-color-dd-color-shade);
+	--ion-color-tint: var(--ion-color-dd-color-tint);
+}
+
+::ng-deep{
+  .toast-success {
+    --background: green !important;
+    color: white !important;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  .toast-error {
+    --background: red !important;
+    color: white !important;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+  }
+	ion-button,button{
+		border-radius: 0 !important;
+	}
+	*{
+		font-family: 'Gilroy-Bold', sans-serif;
+	}
+	h1,h2,h3,h4,h5{
+		font-family: 'Gilroy-Heavy', sans-serif !important;
+	}
+	p,label{
+		font-family: 'Gilroy-Bold', sans-serif;
+	}
+	.mt-3{
+		margin-top:3% !important;
+	}
+	.mt-15{
+		margin-top:15%;
+	}
+	.text-left{
+		text-align: left !important;
+		label,p{
+			text-align:  left !important;
+		}
+	}
+  .font-weight-regular{
+    font-family: 'Gilroy-Regular',sans-serif !important;
+    font-weight: 400 !important;
+  }
+}
