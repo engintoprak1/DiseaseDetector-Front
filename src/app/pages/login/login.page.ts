@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
+import { ToastrService } from 'src/app/services/toastr/toastr.service';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +11,9 @@ import { NavController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private router:NavController) { }
+  identificationNumber:string;
+  password:string;
+  constructor(private router:NavController,private authService:AuthService,private localStorage:LocalStorageService,private toastr:ToastrService) { }
 
   ngOnInit() {
   }
@@ -16,6 +21,15 @@ export class LoginPage implements OnInit {
     this.router.navigateForward("/register");
   }
   goToHome(){
-    this.router.navigateRoot("/home");
+    this.authService.login({identificationNumber:this.identificationNumber,password:this.password}).subscribe((response)=>{
+      if(response.success){
+        this.localStorage.set("token",response.data.accessToken);
+        this.router.navigateRoot("/home");
+        return;
+      }
+      this.toastr.showErrorMessage(response.message);
+    },err=>{
+      this.toastr.showErrorMessage(err.error.message);
+    })
   }
 }

@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { QuestionService } from './../../services/question.service';
+import { ActivatedRoute } from '@angular/router';
+import { Question } from './../../models/question';
+import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { ToastrService } from 'src/app/services/toastr/toastr.service';
+declare var webkitSpeechRecognition;
 
 @Component({
   selector: 'app-home',
@@ -7,67 +11,93 @@ import { ToastrService } from 'src/app/services/toastr/toastr.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-
-  currentIndex=0;
-  answerOptions = ["A","B","C","D","E","F"]
-  questions:any[]=[
-    {
-      questionString:"Yaşınız nedir?",
-      answers:[
-        {id:1,answer:"0-5 Yaş (Bebek)",isSelected:false},
-        {id:2,answer:"5-15 Yaş (Genç)",isSelected:false},
-        {id:3,answer:"15-25 Yaş (Yetişkin)",isSelected:false},
-        {id:4,answer:"15-25 Yaş (Yetişkin)",isSelected:false},
-        {id:5,answer:"15-25 Yaş (Yetişkin)",isSelected:false},
-        {id:6,answer:"15-25 Yaş (Yetişkin)",isSelected:false},
-      ]
-    },
-    {
-      questionString:"Boyunuz nedir?",
-      answers:[
-        {id:1,answer:"150-170 cm",isSelected:false},
-        {id:2,answer:"170-190 cm",isSelected:false},
-        {id:3,answer:"190-210 cm",isSelected:false},
-      ]
-    },
-    {
-      questionString:"Kilonuz nedir?",
-      answers:[
-        {id:1,answer:"40-60 kg",isSelected:false},
-        {id:2,answer:"60-80 kg",isSelected:false},
-        {id:3,answer:"80+ kg",isSelected:false},
-      ]
-    }
-  ]
-  constructor(private toastrService:ToastrService) { }
+  currentIndex = 0;
+  answerOptions = ['A', 'B', 'C', 'D', 'E', 'F'];
+  questions: any[] = [];
+  constructor(
+    private toastrService: ToastrService,
+    private activatedRoute: ActivatedRoute,
+    private questionService: QuestionService,
+    private ngZone:NgZone,
+    private cd:ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
+    this.getAllQuestions();
   }
 
-  selectAnswer(answerToSelect:any){
-    this.questions[this.currentIndex].answers.forEach(answer=>{
-      if(answer.id==answerToSelect.id){
-        answer.isSelected=true;
-      }else{
-        answer.isSelected=false;
+  getAllQuestions() {
+    this.questionService.getAllQuestions().subscribe((response) => {
+      this.questions = response.data;
+    });
+  }
+
+  selectAnswer(answerToSelect: any) {
+    this.questions[this.currentIndex].answers.forEach((answer) => {
+      if (answer.id == answerToSelect.id) {
+        answer.isSelected = true;
+      } else {
+        answer.isSelected = false;
       }
     });
   }
-  goNextQuestion(){
-    let selectedAnswer = this.questions[this.currentIndex].answers.find(a=>a.isSelected);
-    if(!selectedAnswer){
-      this.toastrService.showErrorMessage("Lütfen bir şık seçiniz.");
-      return;
-    }
+  goNextQuestion() {
+    let selectedAnswer = this.questions[this.currentIndex].answers.find(
+      (a) => a.isSelected
+    );
+    // if(!selectedAnswer){
+    //   this.toastrService.showErrorMessage("Lütfen bir şık seçiniz.");
+    //   return;
+    // }
     this.currentIndex++;
-    console.log(this.questions);
+    if (this.currentIndex >= this.questions.length) {
+      console.log('BURDA BİTİR');
+      console.log(this.questions);
+    }
   }
-  getNextQuestionsButtonString(){
-    let text = "";
-    this.currentIndex >= this.questions.length - 1 ? text= "BİTİR" : text= "BİR SONRAKİ SORU";
+  getNextQuestionsButtonString() {
+    let text = '';
+    this.currentIndex >= this.questions.length - 1
+      ? (text = 'BİTİR')
+      : (text = 'BİR SONRAKİ SORU');
     return text;
   }
-  goPreviousQuestion(){
+  goPreviousQuestion() {
     this.currentIndex--;
+  }
+
+  startSpeech() {
+    var synth = window.speechSynthesis;
+    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+    var recognition = new SpeechRecognition();
+
+    recognition.onstart = function () {
+      console.log('We are listening. Try speaking into the microphone.');
+    };
+
+    recognition.onspeechend = function () {
+      recognition.stop();
+    };
+
+    recognition.onresult = (event) => this.findAnswerFromSpeech(event);
+    recognition.start();
+  }
+
+  findAnswerFromSpeech(event:any){
+    let speech = event.results[0][0].transcript;
+    let firstLetter = speech.charAt(0).toUpperCase()
+    if(this.answerOptions.includes(speech.toUpperCase()) || this.answerOptions.includes(firstLetter)){
+      let answerIndex = this.answerOptions.findIndex(a=>a == speech.toUpperCase() || a==firstLetter);
+      if(answerIndex != null && answerIndex != undefined){
+        this.questions[this.currentIndex].answers.forEach(a=>{
+          if(this.questions[this.currentIndex].answers.indexOf(a) == answerIndex){
+            a.isSelected=true;
+          }else{
+            a.isSelected=false;
+          }
+        });
+        this.cd.detectChanges();
+      }
+  }
   }
 }

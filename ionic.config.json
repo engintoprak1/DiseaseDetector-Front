@@ -1,5 +1,7 @@
 {
   "name": "Disease-Detector",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

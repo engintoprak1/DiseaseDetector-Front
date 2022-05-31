@@ -11,8 +11,8 @@
          <p>Bu ekranda hastalığınızın tespiti için sorulan sorulara sesli bir şekilde yanıt vermeniz istenmektedir. Mikrofon butonuna tıklayarak sesli yanıtı devreye alabilirsiniz. Dilerseniz butonlara basarak da sorulara cevap verebilirsiniz.</p>
        </div>
       </ion-col>
-      <ion-col  size="12" class="text-left question">
-        <label>{{questions[currentIndex].questionString}}</label>
+      <ion-col *ngIf="questions.length > 0"  size="12" class="text-left question">
+        <label>{{questions[currentIndex].question}}</label>
         <div class="answers">
           <div class="answer" (click)="selectAnswer(answer)" *ngFor="let answer of questions[currentIndex].answers; let i=index;">
             <div [class.active]="answer.isSelected" class="selection">{{answerOptions[i]}}</div>
@@ -25,7 +25,7 @@
         <ion-button class="register-btn font-weight-regular" *ngIf="currentIndex > 0" (click)="goPreviousQuestion()">BİR ÖNCEKİ SORU</ion-button>
       </ion-col>
       <ion-col class="microphone-col" size="12">
-        <ion-icon name="mic-outline"></ion-icon>
+        <ion-icon name="mic-outline" (click)="startSpeech()"></ion-icon>
       </ion-col>
     </ion-row>
   </ion-grid>

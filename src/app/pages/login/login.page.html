@@ -9,12 +9,12 @@
       </ion-col>
       <ion-col class="mt-15 input-col" size="12">
         <label>T.C. Kimlik Numaranız</label>
-        <ion-input type="text" placeholder="TC Kimlik Numaranız"></ion-input>
+        <ion-input [(ngModel)]="identificationNumber" type="text" placeholder="TC Kimlik Numaranız"></ion-input>
       </ion-col>
-      
+
       <ion-col class="input-col" size="12">
         <label>Şifreniz</label>
-        <ion-input type="password" placeholder="Şifreniz"></ion-input>
+        <ion-input [(ngModel)]="password" type="password" placeholder="Şifreniz"></ion-input>
       </ion-col>
       <ion-col class="button-col" size="12">
         <ion-button class="login-btn" (click)="goToHome()">GİRİŞ YAP</ion-button>
