@@ -1,0 +1,161 @@
+* {
+  --border-style: none !important;
+}
+
+ion-content {
+  --offset-top: -5% !important;
+  text-align: center;
+  margin-top: 25% !important;
+}
+.input-col {
+  text-align: left !important;
+  label {
+    margin-left: 10%;
+    color: #024863 !important;
+  }
+}
+.title {
+  color: #1a9581;
+  h2 {
+    font-size: 32px;
+    font-weight: bolder;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+}
+
+ion-input {
+  font-family: "Gilroy-Regular", sans-serif !important;
+  --background: #f3f3f3 !important;
+  width: 80%;
+  margin: auto;
+  padding-left: 17px !important;
+  margin-top: 2%;
+  color: #024863 !important;
+}
+.login-btn {
+  --background: #1a9581 !important;
+  color: white;
+  font-family: "Gilroy-Bold", sans-serif !important;
+  font-size: 18px !important;
+  width: 80%;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  --border-radius: 0 !important;
+}
+.register-btn {
+  --background: white !important;
+  border: 3px solid #1a9581 !important;
+  color: #1a9581;
+  font-family: "Gilroy-Bold", sans-serif !important;
+  font-size: 18px !important;
+  width: 80%;
+  --border-radius: 0 !important;
+}
+.information-area {
+  background: #024863 !important;
+  width: 75%;
+  margin-top: 5% !important;
+  text-align: center;
+  margin: auto;
+  color: white;
+  padding: 24px;
+  p {
+    font-family: "gilroy-regular", sans-serif !important;
+    font-size: 14px;
+  }
+}
+.question{
+    label{
+        margin-left:11% !important;
+        color:#024863 !important;
+        font-size:16px;
+        font-family: 'Gilroy-Regular',sans-serif !important;
+    }
+}
+.answers{
+  font-family: 'Gilroy-Regular',sans-serif !important;
+  margin-left:11%;
+  .question-string{
+    color:#024863 !important;
+    margin-left:3% !important;
+    background: #F3F3F3 !important;
+    width:72%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding-left:12px;
+  }
+  margin-top:5% !important;
+  .answer{
+    display: flex;
+    align-items: center;
+    margin-bottom:10px !important;
+  }
+
+  .selection{
+
+    font-family: 'Gilroy-Regular',sans-serif !important;
+     background: #B6B6B6 !important;
+     height:40px !important;
+     width:40px;
+     text-align: center;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     color:white !important;
+
+  }
+  .active{
+    background: #1A9581 !important;
+  }
+}
+.microphone-col{
+  ion-icon{
+    background: #2D7FC4 !important;
+    font-size: 46px;
+    padding: 15px;
+    border-radius: 100%;
+    color: white;
+  }
+}
+.pulse {
+  background: #2D7FC4; //rgb(255, 0, 64);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 20px;
+  text-align: center;
+  line-height: 150px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  animation: animate 2s linear infinite;
+}
+
+.report-area {
+  width: 100%;
+  background: #f3f3f3;
+  padding: 15px 0 15px 0;
+  color:#024863;
+  margin-top: 15px;
+}
+
+.font-color {
+  color: #024863;
+}
+.d-none{
+  display: none !important;
+}
+
+@keyframes animate {
+  0% {
+      box-shadow: 0 0 0 0 #2D7FC4, 0 0 0 0 #2D7FC4;
+  }
+  40% {
+      box-shadow: 0 0 0 50px rgba(255, 0, 64, 0), 0 0 0 0 #2D7FC4;
+  }
+  80% {
+      box-shadow: 0 0 0 50px rgba(255, 0, 64, 0), 0 0 0 30px rgba(255, 0, 64, 0);
+  }
+  100% {
+      box-shadow: 0 0 0 0 rgba(255, 0, 64, 0), 0 0 0 30px rgba(255, 0, 64, 0);
+  }
+}

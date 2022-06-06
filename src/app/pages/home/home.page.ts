@@ -1,5 +1,6 @@
+import { NavController } from '@ionic/angular';
 import { QuestionService } from './../../services/question.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from './../../models/question';
 import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { ToastrService } from 'src/app/services/toastr/toastr.service';
@@ -12,11 +13,14 @@ declare var webkitSpeechRecognition;
 })
 export class HomePage implements OnInit {
   currentIndex = 0;
-  answerOptions = ['A', 'B', 'C', 'D', 'E', 'F'];
+  answerOptions = ['A', 'B', 'C', 'D', 'E', 'F','G','H','I'];
   questions: any[] = [];
+  pregnancy:boolean=false;
+  speaking:boolean=false;
   constructor(
     private toastrService: ToastrService,
     private activatedRoute: ActivatedRoute,
+    private router:NavController,
     private questionService: QuestionService,
     private ngZone:NgZone,
     private cd:ChangeDetectorRef
@@ -42,17 +46,38 @@ export class HomePage implements OnInit {
     });
   }
   goNextQuestion() {
-    let selectedAnswer = this.questions[this.currentIndex].answers.find(
-      (a) => a.isSelected
-    );
-    // if(!selectedAnswer){
-    //   this.toastrService.showErrorMessage("Lütfen bir şık seçiniz.");
-    //   return;
-    // }
-    this.currentIndex++;
+    let selectedAnswer = this.questions[this.currentIndex].answers.find((a) => a.isSelected);
+    if(!selectedAnswer){
+      this.toastrService.showErrorMessage("Lütfen bir şık seçiniz.");
+      return;
+    }
+    if(this.questions[this.currentIndex].id == 8){
+      if(selectedAnswer.id == 36 ||  selectedAnswer.id == 38)
+      {
+        this.pregnancy=true;
+        this.currentIndex++;
+      }
+      else
+      {
+        this.pregnancy=false;
+        this.currentIndex+=7;
+      }
+    }else{
+      this.currentIndex++;
+    }
     if (this.currentIndex >= this.questions.length) {
-      console.log('BURDA BİTİR');
-      console.log(this.questions);
+      this.questionService.saveQuestions(this.questions).subscribe(response=>{
+        if(response.success){
+          this.toastrService.showSuccessMessage(response.message);
+          this.router.navigateRoot("/report");
+        }else{
+          this.toastrService.showErrorMessage(response.message);
+        }
+      },err=>{
+        if(err.error && err.error.message){
+          this.toastrService.showErrorMessage(err.error.message);
+        }
+      })
     }
   }
   getNextQuestionsButtonString() {
@@ -63,17 +88,22 @@ export class HomePage implements OnInit {
     return text;
   }
   goPreviousQuestion() {
+    if(this.pregnancy == false && this.questions[this.currentIndex].id == 16){
+      this.currentIndex -= 7;
+    }else
     this.currentIndex--;
   }
 
   startSpeech() {
+    if(this.speaking){
+      this.speaking=false
+      return;
+    }
     var synth = window.speechSynthesis;
     var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
     var recognition = new SpeechRecognition();
 
-    recognition.onstart = function () {
-      console.log('We are listening. Try speaking into the microphone.');
-    };
+    recognition.onstart = this.startSpeaking();
 
     recognition.onspeechend = function () {
       recognition.stop();
@@ -81,9 +111,16 @@ export class HomePage implements OnInit {
 
     recognition.onresult = (event) => this.findAnswerFromSpeech(event);
     recognition.start();
+    setTimeout(() => {
+      recognition.stop();
+    }, 5000);
+  }
+  startSpeaking(){
+    this.speaking=true;
   }
 
   findAnswerFromSpeech(event:any){
+    this.speaking=false;
     let speech = event.results[0][0].transcript;
     let firstLetter = speech.charAt(0).toUpperCase()
     if(this.answerOptions.includes(speech.toUpperCase()) || this.answerOptions.includes(firstLetter)){

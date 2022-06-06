@@ -10,11 +10,11 @@ import { UserAccessToken } from 'src/app/models/userAccessToken';
 })
 export class AuthService {
 
-  apiBaseUrl:string="http://46.45.163.22:6161/";
+  apiBaseUrl:string="http://46.45.163.22:6161/login";
   constructor(private httpClient:HttpClient) { }
 
 
   login(loginModel:any):Observable<SingleResponseModel<UserAccessToken>>{
-    return this.httpClient.post<SingleResponseModel<UserAccessToken>>(this.apiBaseUrl+"login",loginModel);
+    return this.httpClient.post<SingleResponseModel<UserAccessToken>>(this.apiBaseUrl,loginModel);
   }
 }

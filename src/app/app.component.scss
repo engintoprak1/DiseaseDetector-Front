@@ -59,4 +59,24 @@
     font-family: 'Gilroy-Regular',sans-serif !important;
     font-weight: 400 !important;
   }
+  .font-weight-semi-bold {
+    font-family: 'Gilroy-Bold',sans-serif !important;
+    font-weight: 600 !important;
+  }
+  hr {
+    height: 2px;
+    background: #F3F3F3 !important;
+  }
+
+  .mt-15{
+    margin-top: 15px !important;
+  }
+
+  .mb-20 {
+    margin-bottom: 15px !important;
+  }
+
+  .p-10 {
+    padding: 0 10% 0 10%;
+  }
 }

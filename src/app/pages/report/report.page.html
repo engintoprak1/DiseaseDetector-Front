@@ -1,0 +1,28 @@
+
+<ion-content>
+<ion-grid class="ion-no-padding">
+  <ion-row>
+    <ion-col size="12">
+      <div class="title">
+        <h2>Disease Detection</h2>
+      </div>
+    </ion-col>
+    <ion-col class="ion-no-padding mt-15" size="12">
+      <hr>
+    </ion-col>
+    <ion-col class="p-10" size="12">
+      <div class="report-area">
+        <h3 class="ion-no-margin font-weight-semi-bold">Raporunuz</h3>
+      </div>
+    </ion-col>
+    <ion-col class="p-10 mt-15" size="12">
+      <div class="font-weight-semi-bold font-color">Geçmiş Olsun!</div>
+      <div class="font-weight-regular mt-15 mb-20 font-color" [innerHTML]="report"></div>
+    </ion-col>
+    <ion-col class="button-col" size="12">
+      <ion-button (click)="clickOnShare()" class="login-btn font-weight-regular">PAYLAŞ</ion-button>
+      <a class="d-none" #mailtoLink href="mailto:test@example.com?subject=Sağlık Raporu&body={{report}}">First Example</a>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</ion-content>
